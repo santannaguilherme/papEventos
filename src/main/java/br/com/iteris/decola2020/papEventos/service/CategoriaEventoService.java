@@ -20,11 +20,7 @@ public class CategoriaEventoService {
         this.categoriaEventoRepository = categoriaEventoRepository;
     }
 
-    public CategoriaEvento createEvento(CategoriaEvento model) {
-        return categoriaEventoRepository.save(model);
-    }
-
-    public List<CategoriaEvento> listEvento() {
+    public List<CategoriaEvento> listCategoriaEvento() {
         return categoriaEventoRepository.findAll();
     }
 
@@ -33,18 +29,6 @@ public class CategoriaEventoService {
         return evento.orElseThrow(() -> new DataNotFoundException("Event Not found"));
     }
     
-    public void deletEvento(Integer id)throws DataNotFoundException{
-        findById(id);
-        categoriaEventoRepository.deleteById(id);
-    }
-
-    public CategoriaEvento updateEvento(CategoriaEvento model,Integer id) throws DataNotFoundException{
-        CategoriaEvento e = findById(id);
-        /*c.setName(model.getName());
-        c.setPhone(model.getPhone());
-        
-        */
-        return categoriaEventoRepository.save(e);
-    }
+   
 
 }
