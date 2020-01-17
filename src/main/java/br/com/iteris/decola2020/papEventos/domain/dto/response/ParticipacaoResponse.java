@@ -1,5 +1,6 @@
 package br.com.iteris.decola2020.papEventos.domain.dto.response;
 
+import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,6 @@ public class ParticipacaoResponse {
     private Integer Nota;
 
     private String Comentario;
+
+    private Evento evento;
 }

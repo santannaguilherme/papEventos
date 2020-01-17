@@ -20,6 +20,7 @@ import br.com.iteris.decola2020.papEventos.domain.dto.request.ParticipacaoCreate
 import br.com.iteris.decola2020.papEventos.domain.dto.response.ParticipacaoResponse;
 import br.com.iteris.decola2020.papEventos.domain.entities.Participacao;
 import br.com.iteris.decola2020.papEventos.domain.mapper.ParticipacaoMapper;
+import br.com.iteris.decola2020.papEventos.service.EventoService;
 import br.com.iteris.decola2020.papEventos.service.ParticipacaoService;
 
 @RestController
@@ -27,12 +28,14 @@ import br.com.iteris.decola2020.papEventos.service.ParticipacaoService;
 public class ParticipacaoController {
 
 	private final ParticipacaoService participacaoService;
+	private final EventoService eventoService;
 	private final ParticipacaoMapper mapper;
 
 	@Autowired
-	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper) {
+	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper,EventoService eventoService) {
 		this.participacaoService = participacaoService;
 		this.mapper = participacaoMapper;
+		this.eventoService = eventoService;
 	}
 
 	@GetMapping(value = "/{id}")
@@ -54,10 +57,12 @@ public class ParticipacaoController {
 
 	@PostMapping
 	public ResponseEntity<ParticipacaoResponse> post(@Valid @RequestBody ParticipacaoCreateRequest model) {
+		Participacao participacao = mapper.fromDto(model);
+		participacao.setEvento(eventoService.findById(model.getIdEvento()));
 
-		Participacao participacao = participacaoService.createParticipacao(mapper.fromDto(model));
+		Participacao p = participacaoService.createParticipacao(participacao);
 
-		return ResponseEntity.ok(mapper.toDto(participacao));
+		return ResponseEntity.ok(mapper.toDto(p));
 	}
 
 	@PutMapping(value = "/{id}")

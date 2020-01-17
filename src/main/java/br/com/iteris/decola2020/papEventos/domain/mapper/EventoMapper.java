@@ -19,12 +19,17 @@ public class EventoMapper {
     }
 
     public EventoResponse toDto(Evento input) {
-        return mapper.
-        map(input, EventoResponse.class);
+        return mapper.map(input, EventoResponse.class);
     }
 
     public Evento fromDto(EventoCreateRequest input) {
         return mapper.map(input, Evento.class);
     }
 
-} 
+    public Evento updateFromDto(EventoCreateRequest input, Integer id) {
+        Evento e = mapper.map(input, Evento.class);
+        e.setIdEvento(id);
+        return e;
+    }
+
+}

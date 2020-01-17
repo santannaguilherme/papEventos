@@ -72,8 +72,11 @@ public class EventoController {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EventoResponse> updateById(@PathVariable Integer id,
 			@Valid @RequestBody EventoCreateRequest model) {
-		Evento evento = eventoService.updateEvento(mapper.fromDto(model), id);
-		return ResponseEntity.ok(mapper.toDto(evento));
+		Evento evento = mapper.updateFromDto(model,id);
+		evento.setCategoria(categoriaEventoService.findById(model.getIdCategoriaEvento()));
+		evento.setStatus(statusEventoService.findById(model.getIdEventoStatus()));
+		Evento e = eventoService.updateEvento(evento, id);
+		return ResponseEntity.ok(mapper.toDto(e));
 	}
 
 }

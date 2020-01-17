@@ -39,12 +39,8 @@ public class EventoService {
     }
 
     public Evento updateEvento(Evento model,Integer id) throws DataNotFoundException{
-        Evento e = findById(id);
-        /*c.setName(model.getName());
-        c.setPhone(model.getPhone());
-        
-        */
-        return eventoRepository.save(e);
+        findById(id);
+        return eventoRepository.save(model);
     }
 
 }

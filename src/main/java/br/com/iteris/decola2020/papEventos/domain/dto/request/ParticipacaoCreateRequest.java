@@ -21,7 +21,6 @@ public class ParticipacaoCreateRequest {
     @Size(max = 250)
     private String LoginParticipante;
 
-    @NotEmpty(message = "score is required")
     private Boolean FlagPresente;
 
    
