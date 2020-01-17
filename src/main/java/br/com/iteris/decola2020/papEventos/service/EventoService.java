@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
+import br.com.iteris.decola2020.papEventos.domain.mapper.EventoMapper;
 import br.com.iteris.decola2020.papEventos.exception.DataCantBeDeletedException;
 import br.com.iteris.decola2020.papEventos.exception.DataNotFoundException;
 import br.com.iteris.decola2020.papEventos.repository.EventoRepository;
@@ -15,10 +16,12 @@ import br.com.iteris.decola2020.papEventos.repository.EventoRepository;
 public class EventoService {
 
     private final EventoRepository eventoRepository;
+    private final EventoMapper mapper;
 
     @Autowired
-    public EventoService(EventoRepository eventoRepository) {
+    public EventoService(EventoRepository eventoRepository, EventoMapper mapper) {
         this.eventoRepository = eventoRepository;
+        this.mapper = mapper;
     }
 
     public Evento createEvento(Evento model) {
@@ -45,7 +48,8 @@ public class EventoService {
     }
 
     public Evento updateEvento(Evento model,Integer id) throws DataNotFoundException{
-        findById(id);
+        Evento evento = findById(id);
+
         return eventoRepository.save(model);
     }
 

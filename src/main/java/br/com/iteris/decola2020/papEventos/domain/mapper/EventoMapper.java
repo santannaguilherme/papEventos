@@ -26,7 +26,7 @@ public class EventoMapper {
         return mapper.map(input, Evento.class);
     }
 
-    public Evento updateFromDto(EventoCreateRequest input, Integer id) {
+    public Evento updateFromModel(Evento input, Integer id) {
         Evento e = mapper.map(input, Evento.class);
         e.setIdEvento(id);
         return e;
