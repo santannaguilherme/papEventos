@@ -32,7 +32,8 @@ public class ParticipacaoController {
 	private final ParticipacaoMapper mapper;
 
 	@Autowired
-	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper,EventoService eventoService) {
+	public ParticipacaoController(ParticipacaoService participacaoService, ParticipacaoMapper participacaoMapper,
+			EventoService eventoService) {
 		this.participacaoService = participacaoService;
 		this.mapper = participacaoMapper;
 		this.eventoService = eventoService;
@@ -68,8 +69,12 @@ public class ParticipacaoController {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ParticipacaoResponse> updateById(@PathVariable Integer id,
 			@Valid @RequestBody ParticipacaoCreateRequest model) {
-		Participacao participacao = participacaoService.updateParticipacao(mapper.fromDto(model), id);
-		return ResponseEntity.ok(mapper.toDto(participacao));
+
+		Participacao participacao = mapper.updateFromDto(model, id);
+		participacao.setEvento(eventoService.findById(model.getIdEvento()));
+
+		Participacao p = participacaoService.updateParticipacao(participacao, id);
+		return ResponseEntity.ok(mapper.toDto(p));
 	}
 
 }

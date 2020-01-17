@@ -39,12 +39,9 @@ public class ParticipacaoService {
     }
 
     public Participacao updateParticipacao(Participacao model, Integer id) throws DataNotFoundException {
-        Participacao p = findById(id);
-        /*
-         * c.setName(model.getName()); c.setPhone(model.getPhone());
-         * 
-         */
-        return paticipacaoRepository.save(p);
+        
+        findById(id);
+        return paticipacaoRepository.save(model);
     }
 
 }
