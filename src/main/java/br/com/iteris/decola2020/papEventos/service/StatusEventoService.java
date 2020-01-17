@@ -24,7 +24,7 @@ public class StatusEventoService {
         return statusEventoRepository.save(model);
     }
 
-    public List<StatusEvento> listEvento() {
+    public List<StatusEvento> listStatusEvento() {
         return statusEventoRepository.findAll();
     }
 
