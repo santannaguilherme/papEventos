@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
+import br.com.iteris.decola2020.papEventos.exception.DataCantBeDeletedException;
 import br.com.iteris.decola2020.papEventos.exception.DataNotFoundException;
 import br.com.iteris.decola2020.papEventos.repository.EventoRepository;
 
@@ -35,7 +36,12 @@ public class EventoService {
     
     public void deletEvento(Integer id)throws DataNotFoundException{
         findById(id);
-        eventoRepository.deleteById(id);
+        
+        try {
+            eventoRepository.deleteById(id);
+        } catch (Exception  e) {
+           throw new DataCantBeDeletedException("Can't delete an event that has partcipants alread");
+        }
     }
 
     public Evento updateEvento(Evento model,Integer id) throws DataNotFoundException{
