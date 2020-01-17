@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -45,6 +44,5 @@ public class Evento {
     private String Descricao;
 
     @Column(nullable = false)
-    @Size(min = 1)
     private Integer LimiteVagas;
 }

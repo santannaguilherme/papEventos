@@ -2,6 +2,8 @@ package br.com.iteris.decola2020.papEventos.domain.dto.response;
 
 import java.util.Date;
 
+import br.com.iteris.decola2020.papEventos.domain.entities.CategoriaEvento;
+import br.com.iteris.decola2020.papEventos.domain.entities.StatusEvento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,4 +28,8 @@ public class EventoResponse {
     private String Descricao;
 
     private Integer LimiteVagas;
+
+    private StatusEvento status;
+
+    private CategoriaEvento categoria;
 }

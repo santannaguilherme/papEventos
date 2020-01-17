@@ -26,7 +26,7 @@ public class CategoriaEventoService {
 
 	public CategoriaEvento findById(Integer id) {
         Optional<CategoriaEvento> evento = categoriaEventoRepository.findById(id);
-        return evento.orElseThrow(() -> new DataNotFoundException("Event Not found"));
+        return evento.orElseThrow(() -> new DataNotFoundException("Categoria Not found"));
     }
     
    

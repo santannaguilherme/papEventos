@@ -20,7 +20,9 @@ import br.com.iteris.decola2020.papEventos.domain.dto.request.EventoCreateReques
 import br.com.iteris.decola2020.papEventos.domain.dto.response.EventoResponse;
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
 import br.com.iteris.decola2020.papEventos.domain.mapper.EventoMapper;
+import br.com.iteris.decola2020.papEventos.service.CategoriaEventoService;
 import br.com.iteris.decola2020.papEventos.service.EventoService;
+import br.com.iteris.decola2020.papEventos.service.StatusEventoService;
 
 @RestController
 @RequestMapping("/evento")
@@ -28,11 +30,16 @@ public class EventoController {
 
 	private final EventoService eventoService;
 	private final EventoMapper mapper;
+	private final StatusEventoService statusEventoService;
+	private final CategoriaEventoService categoriaEventoService;
 
 	@Autowired
-	public EventoController(EventoService eventoService, EventoMapper eventoMapper) {
+	public EventoController(EventoService eventoService, EventoMapper eventoMapper,
+			StatusEventoService statusEventoService, CategoriaEventoService categoriaEventoService) {
 		this.eventoService = eventoService;
 		this.mapper = eventoMapper;
+		this.statusEventoService = statusEventoService;
+		this.categoriaEventoService = categoriaEventoService;
 	}
 
 	@GetMapping(value = "/{id}")
@@ -54,10 +61,12 @@ public class EventoController {
 
 	@PostMapping
 	public ResponseEntity<EventoResponse> post(@Valid @RequestBody EventoCreateRequest model) {
-
-		Evento evento = eventoService.createEvento(mapper.fromDto(model));
-
-		return ResponseEntity.ok(mapper.toDto(evento));
+		Evento evento = mapper.fromDto(model);
+		evento.setCategoria(categoriaEventoService.findById(model.getIdCategoriaEvento()));
+		evento.setStatus(statusEventoService.findById(model.getIdEventoStatus()));
+		
+		Evento e = eventoService.createEvento(evento);
+		return ResponseEntity.ok(mapper.toDto(e));
 	}
 
 	@PutMapping(value = "/{id}")

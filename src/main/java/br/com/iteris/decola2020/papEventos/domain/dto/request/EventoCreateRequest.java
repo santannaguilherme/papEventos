@@ -17,6 +17,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EventoCreateRequest {
 
+   
+    private Integer IdEventoStatus;
+
+   
+    private Integer IdCategoriaEvento;
+
     @NotEmpty(message = "name is required")
     @Size(max = 250)
     private String Nome;
@@ -35,6 +41,6 @@ public class EventoCreateRequest {
     @Size(max = 1000)
     private String Descricao;
 
-    @Size(min = 1)
+  
     private Integer LimiteVagas;
 }
