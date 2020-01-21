@@ -3,8 +3,9 @@ package br.com.iteris.decola2020.papEventos.domain.dto.request;
 import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Future;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,19 +19,19 @@ import lombok.NoArgsConstructor;
 public class EventoCreateRequest {
 
    
-    private Integer IdEventoStatus;
-
-   
+    @NotNull(message = "Categoria is required")
     private Integer IdCategoriaEvento;
 
     @NotEmpty(message = "name is required")
     @Size(max = 250)
     private String Nome;
 
-    @FutureOrPresent
+    @Future(message = "Can't be a past date")
+    @NotNull(message = "Data is required")
     private Date DataHoraInicio;
 
-    @FutureOrPresent
+    @Future(message = "Can't be a past date")
+    @NotNull(message = "Data is required")
     private Date DataHoraFim;
 
     @NotEmpty(message = "local is required")
@@ -41,6 +42,6 @@ public class EventoCreateRequest {
     @Size(max = 1000)
     private String Descricao;
 
-  
+    @NotNull(message = "Vagas is required")
     private Integer LimiteVagas;
 }

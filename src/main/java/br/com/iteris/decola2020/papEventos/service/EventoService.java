@@ -7,21 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
+import br.com.iteris.decola2020.papEventos.domain.validators.EventoValidator;
 import br.com.iteris.decola2020.papEventos.exception.DataCantBeDeletedException;
 import br.com.iteris.decola2020.papEventos.exception.DataNotFoundException;
+import br.com.iteris.decola2020.papEventos.exception.InvalidDateException;
 import br.com.iteris.decola2020.papEventos.repository.EventoRepository;
 
 @Service
 public class EventoService {
 
     private final EventoRepository eventoRepository;
+    private final EventoValidator eventoValidator;
 
     @Autowired
-    public EventoService(EventoRepository eventoRepository) {
+    public EventoService(EventoRepository eventoRepository,EventoValidator eventoValidator) {
         this.eventoRepository = eventoRepository;
+        this.eventoValidator = eventoValidator;
     }
 
     public Evento createEvento(Evento model) {
+
+        boolean testeData = eventoValidator.ValidaDatasEvento(model.getDataHoraInicio(), model.getDataHoraFim());
+        if(!testeData){
+            throw new InvalidDateException("Data Errada Brother");
+        }
         return eventoRepository.save(model);
     }
 
@@ -46,6 +55,10 @@ public class EventoService {
 
     public Evento updateEvento(Evento model,Integer id) throws DataNotFoundException{
         findById(id);
+        boolean testeData = eventoValidator.ValidaDatasEvento(model.getDataHoraInicio(), model.getDataHoraFim());
+        if(!testeData){
+            throw new InvalidDateException("Data Errada Brother");
+        }
         return eventoRepository.save(model);
     }
 

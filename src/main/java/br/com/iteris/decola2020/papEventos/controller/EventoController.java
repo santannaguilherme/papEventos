@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.iteris.decola2020.papEventos.domain.dto.request.EventoCreateRequest;
+import br.com.iteris.decola2020.papEventos.domain.dto.request.EventoUpdateRequest;
 import br.com.iteris.decola2020.papEventos.domain.dto.response.EventoResponse;
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
 import br.com.iteris.decola2020.papEventos.domain.mapper.EventoMapper;
@@ -63,7 +64,7 @@ public class EventoController {
 	public ResponseEntity<EventoResponse> post(@Valid @RequestBody EventoCreateRequest model) {
 		Evento evento = mapper.fromDto(model);
 		evento.setCategoria(categoriaEventoService.findById(model.getIdCategoriaEvento()));
-		evento.setStatus(statusEventoService.findById(model.getIdEventoStatus()));
+		evento.setStatus(statusEventoService.findById(1));
 		
 		Evento e = eventoService.createEvento(evento);
 		return ResponseEntity.ok(mapper.toDto(e));
@@ -71,7 +72,7 @@ public class EventoController {
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EventoResponse> updateById(@PathVariable Integer id,
-			@Valid @RequestBody EventoCreateRequest model) {
+			@Valid @RequestBody EventoUpdateRequest model) {
 		Evento evento = mapper.updateFromDto(model,id);
 		evento.setCategoria(categoriaEventoService.findById(model.getIdCategoriaEvento()));
 		evento.setStatus(statusEventoService.findById(model.getIdEventoStatus()));

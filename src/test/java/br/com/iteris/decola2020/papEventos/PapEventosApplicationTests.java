@@ -1,13 +1,14 @@
 package br.com.iteris.decola2020.papEventos;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
-@SpringBootTest
-class PapEventosApplicationTests {
+@RunWith(MockitoJUnitRunner.class)
+public class PapEventosApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 }
