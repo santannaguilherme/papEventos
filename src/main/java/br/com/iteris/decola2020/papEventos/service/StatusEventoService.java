@@ -20,31 +20,13 @@ public class StatusEventoService {
         this.statusEventoRepository = statusEventoRepository;
     }
 
-    public StatusEvento createEvento(StatusEvento model) {
-        return statusEventoRepository.save(model);
-    }
-
     public List<StatusEvento> listStatusEvento() {
         return statusEventoRepository.findAll();
     }
 
-	public StatusEvento findById(Integer id) {
+    public StatusEvento findById(Integer id) {
         Optional<StatusEvento> evento = statusEventoRepository.findById(id);
         return evento.orElseThrow(() -> new DataNotFoundException("Event Not found"));
-    }
-    
-    public void deletEvento(Integer id)throws DataNotFoundException{
-        findById(id);
-        statusEventoRepository.deleteById(id);
-    }
-
-    public StatusEvento updateEvento(StatusEvento model,Integer id) throws DataNotFoundException{
-        StatusEvento e = findById(id);
-        /*c.setName(model.getName());
-        c.setPhone(model.getPhone());
-        
-        */
-        return statusEventoRepository.save(e);
     }
 
 }
