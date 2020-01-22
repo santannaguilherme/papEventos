@@ -80,4 +80,10 @@ public class EventoController {
 		return ResponseEntity.ok(mapper.toDto(e));
 	}
 
+	@PutMapping(value = "/{id}/cancel")
+	public ResponseEntity<EventoResponse> cancel(@PathVariable Integer id) {
+		Evento e = eventoService.cancelEvento(id);
+		return ResponseEntity.ok(mapper.toDto(e));
+	}
+
 }

@@ -37,7 +37,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        boolean teste = EventoValidator.validaDatasEvento(inicio, fim);
 
         assertFalse("Não deve ser igual",teste);
         
@@ -51,7 +51,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        boolean teste = EventoValidator.validaDatasEvento(inicio, fim);
 
         assertFalse("Não deve ser maior",teste);
         
@@ -66,7 +66,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        boolean teste = EventoValidator.validaDatasEvento(inicio, fim);
         assertTrue("Deve ser no mesmo dia",teste);
 
         h1 = 1577847600000L;
@@ -74,7 +74,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        teste = EventoValidator.validaDatasEvento(inicio, fim);
         assertFalse("Deve ser no mesmo dia",teste);
 
         h1 = 1577847600000L;
@@ -82,7 +82,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        teste = EventoValidator.validaDatasEvento(inicio, fim);
         assertFalse("Deve ser no mesmo mes",teste);
 
         h1 = 1577847600000L;
@@ -90,7 +90,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        teste = EventoValidator.validaDatasEvento(inicio, fim);
         assertFalse("Deve ser no mesmo ano",teste);
 
         
@@ -102,8 +102,22 @@ public class EventoValidatorTest {
         inicio.setTime(c.getTimeInMillis());
         fim.setTime(c.getTimeInMillis()+30000);
 
-        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        boolean teste = EventoValidator.validaDatasEvento(inicio, fim);
         assertFalse("Não pode ser no dia atual",teste);
     }
+
+    @Test
+    public void should_notUpdateToday() {
+        Date date = new Date();
+
+        boolean teste = EventoValidator.validaUpdateDate(date);
+        assertFalse("Não pode atualizar no dia atual",teste);
+
+        date.setTime(date.getTime()+24*60*60*1000);
+
+        teste = EventoValidator.validaUpdateDate(date);
+        assertTrue("Deve poder atualizar em um dia diferente",teste);
+    }
+
     
 }
