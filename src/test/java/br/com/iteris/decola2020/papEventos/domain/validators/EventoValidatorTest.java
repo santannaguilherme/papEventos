@@ -3,6 +3,7 @@ package br.com.iteris.decola2020.papEventos.domain.validators;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
@@ -36,7 +37,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        boolean teste = eventoValidator.ValidaDatasEvento(inicio, fim);
+        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
 
         assertFalse("Não deve ser igual",teste);
         
@@ -50,7 +51,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        boolean teste = eventoValidator.ValidaDatasEvento(inicio, fim);
+        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
 
         assertFalse("Não deve ser maior",teste);
         
@@ -65,7 +66,7 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        boolean teste = eventoValidator.ValidaDatasEvento(inicio, fim);
+        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
         assertTrue("Deve ser no mesmo dia",teste);
 
         h1 = 1577847600000L;
@@ -73,18 +74,36 @@ public class EventoValidatorTest {
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        teste = eventoValidator.ValidaDatasEvento(inicio, fim);
+        teste = EventoValidator.ValidaDatasEvento(inicio, fim);
         assertFalse("Deve ser no mesmo dia",teste);
+
+        h1 = 1577847600000L;
+        h2 = 1580526000000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        assertFalse("Deve ser no mesmo mes",teste);
 
         h1 = 1577847600000L;
         h2 = 1609470000000L;
         inicio.setTime(h1);
         fim.setTime(h2);
 
-        teste = eventoValidator.ValidaDatasEvento(inicio, fim);
+        teste = EventoValidator.ValidaDatasEvento(inicio, fim);
         assertFalse("Deve ser no mesmo ano",teste);
 
         
+    }
+    @Test
+    public void should_notBeToday() {
+
+        Calendar c = Calendar.getInstance();
+        inicio.setTime(c.getTimeInMillis());
+        fim.setTime(c.getTimeInMillis()+30000);
+
+        boolean teste = EventoValidator.ValidaDatasEvento(inicio, fim);
+        assertFalse("Não pode ser no dia atual",teste);
     }
     
 }

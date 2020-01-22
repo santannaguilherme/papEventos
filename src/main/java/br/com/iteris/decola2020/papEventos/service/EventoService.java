@@ -17,17 +17,15 @@ import br.com.iteris.decola2020.papEventos.repository.EventoRepository;
 public class EventoService {
 
     private final EventoRepository eventoRepository;
-    private final EventoValidator eventoValidator;
 
     @Autowired
-    public EventoService(EventoRepository eventoRepository,EventoValidator eventoValidator) {
+    public EventoService(EventoRepository eventoRepository) {
         this.eventoRepository = eventoRepository;
-        this.eventoValidator = eventoValidator;
     }
 
     public Evento createEvento(Evento model) {
 
-        boolean testeData = eventoValidator.ValidaDatasEvento(model.getDataHoraInicio(), model.getDataHoraFim());
+        boolean testeData = EventoValidator.ValidaDatasEvento(model.getDataHoraInicio(), model.getDataHoraFim());
         if(!testeData){
             throw new InvalidDateException("Data Errada Brother");
         }
@@ -55,7 +53,7 @@ public class EventoService {
 
     public Evento updateEvento(Evento model,Integer id) throws DataNotFoundException{
         findById(id);
-        boolean testeData = eventoValidator.ValidaDatasEvento(model.getDataHoraInicio(), model.getDataHoraFim());
+        boolean testeData = EventoValidator.ValidaDatasEvento(model.getDataHoraInicio(), model.getDataHoraFim());
         if(!testeData){
             throw new InvalidDateException("Data Errada Brother");
         }

@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class EventoValidator {
 
-    public boolean ValidaDatasEvento(Date inicio,Date fim){
+    public static boolean ValidaDatasEvento(Date inicio,Date fim){
 
         long dataInicio = inicio.getTime();
         long dataFim = fim.getTime();
@@ -18,6 +18,7 @@ public class EventoValidator {
         }
       
         Calendar cal = Calendar.getInstance();
+        int hoje = cal.get(Calendar.DAY_OF_MONTH);
         cal.setTime(inicio);
         int dIni = cal.get(Calendar.DAY_OF_MONTH);
         int mIni = cal.get(Calendar.MONTH);
@@ -26,6 +27,12 @@ public class EventoValidator {
         int dFim = cal.get(Calendar.DAY_OF_MONTH);
         int mFim = cal.get(Calendar.MONTH);
         int yFim = cal.get(Calendar.YEAR);
+
+        if(hoje == dIni){
+            return false;
+        }
+
+
 
 
 
