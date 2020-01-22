@@ -68,6 +68,22 @@ public class EventoValidatorTest {
         boolean teste = eventoValidator.ValidaDatasEvento(inicio, fim);
         assertTrue("Deve ser no mesmo dia",teste);
 
+        h1 = 1577847600000L;
+        h2 = 1578020400000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        teste = eventoValidator.ValidaDatasEvento(inicio, fim);
+        assertFalse("Deve ser no mesmo dia",teste);
+
+        h1 = 1577847600000L;
+        h2 = 1609470000000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        teste = eventoValidator.ValidaDatasEvento(inicio, fim);
+        assertFalse("Deve ser no mesmo ano",teste);
+
         
     }
     
