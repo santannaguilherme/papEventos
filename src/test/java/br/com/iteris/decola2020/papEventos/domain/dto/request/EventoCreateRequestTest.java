@@ -1,6 +1,5 @@
 package br.com.iteris.decola2020.papEventos.domain.dto.request;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;

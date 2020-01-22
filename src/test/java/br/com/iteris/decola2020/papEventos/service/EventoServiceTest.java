@@ -78,7 +78,7 @@ public class EventoServiceTest {
 
         expected.expect(InvalidDateException.class);
 
-        Evento e = service.createEvento(entity);
+        service.createEvento(entity);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class EventoServiceTest {
 
         expected.expect(InvalidDateException.class);
 
-        Evento e = service.cancelEvento(anyInt());
+       service.cancelEvento(anyInt());
     }
 
     @Test
@@ -168,7 +168,7 @@ public class EventoServiceTest {
 
         expected.expect(InvalidDateException.class);
 
-        Evento e = service.updateEvento(entity, anyInt());
+        service.updateEvento(entity, anyInt());
     }
 
     @Test
