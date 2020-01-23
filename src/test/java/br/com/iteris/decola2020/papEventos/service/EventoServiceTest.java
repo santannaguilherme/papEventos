@@ -2,7 +2,9 @@
 package br.com.iteris.decola2020.papEventos.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -54,6 +56,8 @@ public class EventoServiceTest {
     private final String local = "Local";
     private final String descricao = "Qualquer coisa";
     private final Integer limiteVagas = 20;
+    private final Date inicio = new Date();
+    private final Date fim = new Date();
 
     Evento entity = Evento.builder().descricao(descricao).nome(nome).dataHoraInicio(dataHoraInicio)
             .dataHoraFim(dataHoraFim).local(local).categoria(new CategoriaEvento()).status(new StatusEvento())
@@ -189,5 +193,97 @@ public class EventoServiceTest {
 
         expected.expect(DataCantBeDeletedException.class);
     }
+
+    
+    @Test
+    public void should_notBeTheSame() {
+
+        long h1 = 1577847600000L;
+        long h2 = 1577847600000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        boolean teste = service.validaDatasEvento(inicio, fim);
+
+        assertFalse("Não deve ser igual",teste);
+        
+    }
+
+    @Test
+    public void should_notHighier() {
+
+        long h1 = 1578798000000L;
+        long h2 = 1577847600000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        boolean teste = service.validaDatasEvento(inicio, fim);
+
+        assertFalse("Não deve ser maior",teste);
+        
+    }
+
+
+    @Test
+    public void should_beTheSameDay() {
+
+        long h1 = 1577847600000L;
+        long h2 = 1577891470000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        boolean teste = service.validaDatasEvento(inicio, fim);
+        assertTrue("Deve ser no mesmo dia",teste);
+
+        h1 = 1577847600000L;
+        h2 = 1578020400000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        teste = service.validaDatasEvento(inicio, fim);
+        assertFalse("Deve ser no mesmo dia",teste);
+
+        h1 = 1577847600000L;
+        h2 = 1580526000000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        teste = service.validaDatasEvento(inicio, fim);
+        assertFalse("Deve ser no mesmo mes",teste);
+
+        h1 = 1577847600000L;
+        h2 = 1609470000000L;
+        inicio.setTime(h1);
+        fim.setTime(h2);
+
+        teste = service.validaDatasEvento(inicio, fim);
+        assertFalse("Deve ser no mesmo ano",teste);
+
+        
+    }
+    @Test
+    public void should_notBeToday() {
+
+        Calendar c = Calendar.getInstance();
+        inicio.setTime(c.getTimeInMillis());
+        fim.setTime(c.getTimeInMillis()+30000);
+
+        boolean teste = service.validaDatasEvento(inicio, fim);
+        assertFalse("Não pode ser no dia atual",teste);
+    }
+
+    @Test
+    public void should_notUpdateToday() {
+        Date date = new Date();
+
+        boolean teste = service.validaUpdateDate(date);
+        assertFalse("Não pode atualizar no dia atual",teste);
+
+        date.setTime(date.getTime()+24*60*60*1000);
+
+        teste = service.validaUpdateDate(date);
+        assertTrue("Deve poder atualizar em um dia diferente",teste);
+    }
+
 
 }
