@@ -4,14 +4,11 @@ package br.com.iteris.decola2020.papEventos.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,14 +20,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import br.com.iteris.decola2020.papEventos.domain.entities.CategoriaEvento;
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
 import br.com.iteris.decola2020.papEventos.domain.entities.Participacao;
-import br.com.iteris.decola2020.papEventos.domain.entities.StatusEvento;
-import br.com.iteris.decola2020.papEventos.exception.DataCantBeDeletedException;
 import br.com.iteris.decola2020.papEventos.exception.DataNotFoundException;
-import br.com.iteris.decola2020.papEventos.exception.InvalidDateException;
-import br.com.iteris.decola2020.papEventos.repository.EventoRepository;
 import br.com.iteris.decola2020.papEventos.repository.ParticipacaoRepository;
 
 /**
