@@ -71,7 +71,7 @@ public class EventoMapperTest {
         EventoUpdateRequest dto = EventoUpdateRequest.builder().descricao("descricao").nome("nome").dataHoraInicio(data)
                 .dataHoraFim(data).local("local").idCategoriaEvento(1).idEventoStatus(1).limiteVagas(1).build();
 
-        Evento entity = mapper.updateFromDto(dto, anyInt());
+        Evento entity = mapper.updateFromDto(dto, 1);
 
         assertEquals("Unexpected value found!", dto.getDescricao(), entity.getDescricao());
         assertEquals("Unexpected value found!", dto.getNome(), entity.getNome());
