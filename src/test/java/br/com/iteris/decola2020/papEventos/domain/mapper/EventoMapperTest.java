@@ -1,7 +1,6 @@
 package br.com.iteris.decola2020.papEventos.domain.mapper;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 
 import java.util.Date;
 
