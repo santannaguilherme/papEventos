@@ -22,22 +22,23 @@ public class Participacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer IdParticipacao;
+    @Column(name = "IdParticipacao")
+    private Integer idParticipacao;
 
     @ManyToOne
     @JoinColumn(name = "IdEvento", nullable = false)
     private Evento evento;
 
-    @Column(nullable = false, length = 250)
-    private String LoginParticipante; 
+    @Column(name = "LoginParticipante",nullable = false, length = 250)
+    private String loginParticipante; 
     
-    @Column(nullable = false)
-    private Boolean FlagPresente;
+    @Column(name = "FlagPresente",nullable = false)
+    private Boolean flagPresente;
 
-    @Column(nullable = false)
-    private Integer Nota;
+    @Column(name = "Nota",nullable = false)
+    private Integer nota;
 
-    @Column(nullable = false, length = 1000)
-    private String Comentario;
+    @Column(name = "Comentario",nullable = false, length = 1000)
+    private String comentario;
 
 }

@@ -20,28 +20,28 @@ public class EventoCreateRequest {
 
    
     @NotNull(message = "Categoria is required")
-    private Integer IdCategoriaEvento;
+    private Integer idCategoriaEvento;
 
     @NotEmpty(message = "name is required")
     @Size(max = 250)
-    private String Nome;
+    private String nome;
 
     @Future(message = "Can't be a past date")
     @NotNull(message = "Data is required")
-    private Date DataHoraInicio;
+    private Date dataHoraInicio;
 
     @Future(message = "Can't be a past date")
     @NotNull(message = "Data is required")
-    private Date DataHoraFim;
+    private Date dataHoraFim;
 
     @NotEmpty(message = "local is required")
     @Size(max = 250)
-    private String Local;
+    private String local;
 
     @NotEmpty(message = "description is required")
     @Size(max = 1000)
-    private String Descricao;
+    private String descricao;
 
     @NotNull(message = "Vagas is required")
-    private Integer LimiteVagas;
+    private Integer limiteVagas;
 }

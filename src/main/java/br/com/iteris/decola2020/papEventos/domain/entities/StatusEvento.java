@@ -20,8 +20,9 @@ public class StatusEvento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer IdEventoStatus;
+    @Column(name = "IdEventoStatus")
+    private Integer idEventoStatus;
 
-    @Column(nullable = false, length = 250)
-    private String NomeStatus;
+    @Column(name = "NomeStatus",nullable = false, length = 250)
+    private String nomeStatus;
 }

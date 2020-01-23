@@ -1,10 +1,13 @@
 package br.com.iteris.decola2020.papEventos.domain.mapper;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.iteris.decola2020.papEventos.domain.dto.request.EventoCreateRequest;
+import br.com.iteris.decola2020.papEventos.domain.dto.request.EventoUpdateRequest;
 import br.com.iteris.decola2020.papEventos.domain.dto.response.EventoResponse;
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
 
@@ -22,12 +25,12 @@ public class EventoMapper {
         return mapper.map(input, EventoResponse.class);
     }
 
-    public Evento fromDto(EventoCreateRequest input) {
-        return mapper.map(input, Evento.class);
+    public Evento fromDto(EventoCreateRequest dto) {
+        return mapper.map(dto, Evento.class);
     }
 
-    public Evento updateFromDto(EventoCreateRequest input, Integer id) {
-        Evento e = mapper.map(input, Evento.class);
+    public Evento updateFromDto(@Valid EventoUpdateRequest model, Integer id) {
+        Evento e = mapper.map(model, Evento.class);
         e.setIdEvento(id);
         return e;
     }

@@ -33,12 +33,12 @@ public class CategoriaEventoServiceTest {
     @InjectMocks
     private CategoriaEventoService service;
 
-    private final Integer IdEventocategoria = 1;
-    private final String NomeCategoria = "qqr coisa";
+    private final Integer idEventocategoria = 1;
+    private final String nomeCategoria = "qqr coisa";
     
     CategoriaEvento entity = CategoriaEvento.builder()
-    .IdCategoriaEvento(IdEventocategoria)
-    .NomeCategoria(NomeCategoria)
+    .idCategoriaEvento(idEventocategoria)
+    .nomeCategoria(nomeCategoria)
     .build();
 
     @Test

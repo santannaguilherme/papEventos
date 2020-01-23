@@ -20,7 +20,4 @@ public class InvalidDateException extends RuntimeException {
         super(message);
     }
 
-    public InvalidDateException(String message, Throwable e) {
-        super(message, e);
-    }
 }

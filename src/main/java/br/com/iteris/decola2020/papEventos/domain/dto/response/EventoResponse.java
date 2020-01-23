@@ -15,19 +15,19 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EventoResponse {
 
-    private Integer IdEvento;
+    private Integer idEvento;
 
-    private String Nome;
+    private String nome;
 
-    private Date DataHoraInicio;
+    private Date dataHoraInicio;
 
-    private Date DataHoraFim;
+    private Date dataHoraFim;
 
-    private String Local;
+    private String local;
 
-    private String Descricao;
+    private String descricao;
 
-    private Integer LimiteVagas;
+    private Integer limiteVagas;
 
     private StatusEvento status;
 

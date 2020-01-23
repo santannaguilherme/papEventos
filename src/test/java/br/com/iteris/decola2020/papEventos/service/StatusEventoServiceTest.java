@@ -38,8 +38,8 @@ public class StatusEventoServiceTest {
     private final String NomeStatus = "qqr coisa";
     
     StatusEvento entity = StatusEvento.builder()
-    .IdEventoStatus(IdEventoStatus)
-    .NomeStatus(NomeStatus)
+    .idEventoStatus(IdEventoStatus)
+    .nomeStatus(NomeStatus)
     .build();
 
     @Test

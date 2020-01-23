@@ -55,9 +55,9 @@ public class EventoServiceTest {
     private final String descricao = "Qualquer coisa";
     private final Integer limiteVagas = 20;
 
-    Evento entity = Evento.builder().Descricao(descricao).Nome(nome).DataHoraInicio(dataHoraInicio)
-            .DataHoraFim(dataHoraFim).Local(local).categoria(new CategoriaEvento()).status(new StatusEvento())
-            .LimiteVagas(limiteVagas).build();
+    Evento entity = Evento.builder().descricao(descricao).nome(nome).dataHoraInicio(dataHoraInicio)
+            .dataHoraFim(dataHoraFim).local(local).categoria(new CategoriaEvento()).status(new StatusEvento())
+            .limiteVagas(limiteVagas).build();
 
     @Test
     public void should_create() {

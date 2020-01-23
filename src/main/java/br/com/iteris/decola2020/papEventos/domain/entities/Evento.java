@@ -24,7 +24,8 @@ public class Evento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer IdEvento;
+    @Column(name = "IdEvento")
+    private Integer idEvento;
     
     @ManyToOne
     @JoinColumn(name = "IdEventoStatus", nullable = false)
@@ -34,21 +35,21 @@ public class Evento {
     @JoinColumn(name = "IdCategoriaEvento", nullable = false)
     private CategoriaEvento categoria;
 
-    @Column(nullable = false, length = 250)
-    private String Nome;
+    @Column(name = "Nome", nullable = false, length = 250)
+    private String nome;
 
-    @Column(nullable = false)
-    private Date DataHoraInicio;
+    @Column(name = "DataHoraInicio", nullable = false)
+    private Date dataHoraInicio;
 
-    @Column(nullable = false)
-    private Date DataHoraFim;
+    @Column(name = "DataHoraFim",nullable = false)
+    private Date dataHoraFim;
 
-    @Column(nullable = false, length = 250)
-    private String Local;
+    @Column(name = "Local",nullable = false, length = 250)
+    private String local;
 
-    @Column(nullable = false, length = 1000)
-    private String Descricao;
+    @Column(name = "Descricao", nullable = false, length = 1000)
+    private String descricao;
 
-    @Column(nullable = false)
-    private Integer LimiteVagas;
+    @Column(name = "LimiteVagas",nullable = false)
+    private Integer limiteVagas;
 }

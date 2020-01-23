@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 public class ParticipacaoCreateRequest {
 
     
-    private Integer IdEvento;
+    private Integer idEvento;
 
     @NotEmpty(message = "login is required")
     @Size(max = 250)
-    private String LoginParticipante;
+    private String loginParticipante;
 
-    private Boolean FlagPresente;
+    private Boolean flagPresente;
 
    
-    private Integer Nota;
+    private Integer nota;
 
     @NotEmpty(message = "description is required")
     @Size(max = 1000)
-    private String Comentario;
+    private String comentario;
 }

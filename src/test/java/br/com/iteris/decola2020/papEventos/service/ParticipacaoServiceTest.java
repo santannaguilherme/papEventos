@@ -45,10 +45,10 @@ public class ParticipacaoServiceTest {
     private final Integer nota = 1;
     private final String comentario = "qqr coisa";
 
-    Participacao entity = Participacao.builder().LoginParticipante(loginParticipante)
-    .FlagPresente(flagPresente)
-    .Nota(nota)
-    .Comentario(comentario)
+    Participacao entity = Participacao.builder().loginParticipante(loginParticipante)
+    .flagPresente(flagPresente)
+    .nota(nota)
+    .comentario(comentario)
     .evento(new Evento())
     .build();
 
