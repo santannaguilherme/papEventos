@@ -65,7 +65,7 @@ public class EventoController {
 		Evento evento = mapper.fromDto(model);
 		evento.setCategoria(categoriaEventoService.findById(model.getIdCategoriaEvento()));
 		evento.setStatus(statusEventoService.findById(1));
-		
+
 		Evento e = eventoService.createEvento(evento);
 		return ResponseEntity.ok(mapper.toDto(e));
 	}
@@ -73,7 +73,7 @@ public class EventoController {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<EventoResponse> updateById(@PathVariable Integer id,
 			@Valid @RequestBody EventoUpdateRequest model) {
-		Evento evento = mapper.updateFromDto(model,id);
+		Evento evento = mapper.updateFromDto(model, id);
 		evento.setCategoria(categoriaEventoService.findById(model.getIdCategoriaEvento()));
 		evento.setStatus(statusEventoService.findById(model.getIdEventoStatus()));
 		Evento e = eventoService.updateEvento(evento, id);
@@ -83,7 +83,24 @@ public class EventoController {
 	@PutMapping(value = "/{id}/cancel")
 	public ResponseEntity<EventoResponse> cancel(@PathVariable Integer id) {
 		Evento e = eventoService.cancelEvento(id);
+
 		return ResponseEntity.ok(mapper.toDto(e));
+	}
+
+	@GetMapping(value = "/categotria/{idCategoria}")
+	public ResponseEntity<List<EventoResponse>> listByCategoria(@PathVariable Integer idCategoria) {
+
+		return ResponseEntity.ok(eventoService.listEventoByCategoria(categoriaEventoService.findById(idCategoria)).stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
+	}
+
+	@GetMapping(value = "/disponivel")
+	public ResponseEntity<List<EventoResponse>> listByDisponibilidade() {
+
+		return ResponseEntity.ok(eventoService.listEventoDisponivel().stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
 	}
 
 }

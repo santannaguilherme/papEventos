@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.iteris.decola2020.papEventos.domain.dto.request.ParticipacaoCreateRequest;
+import br.com.iteris.decola2020.papEventos.domain.dto.request.ParticipacaoUpdateAvaliacaoRequest;
 import br.com.iteris.decola2020.papEventos.domain.dto.response.ParticipacaoResponse;
 import br.com.iteris.decola2020.papEventos.domain.entities.Participacao;
 import br.com.iteris.decola2020.papEventos.domain.mapper.ParticipacaoMapper;
@@ -56,25 +57,34 @@ public class ParticipacaoController {
 				.collect(Collectors.toList()));
 	}
 
+	@GetMapping(value = "/participacao/{idEvento}")
+	public ResponseEntity<List<ParticipacaoResponse>> listbyEvento(@PathVariable Integer idEvento) {
+
+		return ResponseEntity.ok(participacaoService.listParticipacaoByEvento(eventoService.findById(idEvento)).stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
+	}
+
 	@PostMapping
 	public ResponseEntity<ParticipacaoResponse> post(@Valid @RequestBody ParticipacaoCreateRequest model) {
-		Participacao participacao = mapper.fromDto(model);
-		participacao.setEvento(eventoService.findById(model.getIdEvento()));
-
-		Participacao p = participacaoService.createParticipacao(participacao);
+		Participacao p = participacaoService.createParticipacao(mapper.newFromDto(model));
 
 		return ResponseEntity.ok(mapper.toDto(p));
 	}
 
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = "/avaliar/{id}")
 	public ResponseEntity<ParticipacaoResponse> updateById(@PathVariable Integer id,
-			@Valid @RequestBody ParticipacaoCreateRequest model) {
+			@Valid @RequestBody ParticipacaoUpdateAvaliacaoRequest model) {
 
-		Participacao participacao = mapper.updateFromDto(model, id);
-		participacao.setEvento(eventoService.findById(model.getIdEvento()));
+		Participacao participacao = mapper.rateFromDto(model);
 
-		Participacao p = participacaoService.updateParticipacao(participacao, id);
-		return ResponseEntity.ok(mapper.toDto(p));
+		return ResponseEntity.ok(mapper.toDto(participacaoService.updateParticipacao(participacao, id)));
+	}
+
+	@PutMapping(value = "/presenca/{id}")
+	public ResponseEntity<ParticipacaoResponse> updatePresById(@PathVariable Integer id) {
+
+		return ResponseEntity.ok(mapper.toDto(participacaoService.updatePresParticipacao(id)));
 	}
 
 }

@@ -2,6 +2,7 @@ package br.com.iteris.decola2020.papEventos.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.iteris.decola2020.papEventos.domain.dto.response.EventoResponse;
+import br.com.iteris.decola2020.papEventos.domain.entities.CategoriaEvento;
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
 import br.com.iteris.decola2020.papEventos.domain.entities.StatusEvento;
 import br.com.iteris.decola2020.papEventos.exception.DataCantBeDeletedException;
@@ -119,4 +122,12 @@ public class EventoService {
 
         return !hoje.equals(evento);
     }
+
+    public List<Evento> listEventoByCategoria(CategoriaEvento c) {
+        return eventoRepository.findByCategoria(c);
+    }
+
+	public List<Evento> listEventoDisponivel() {
+		return eventoRepository.listAberto();
+	}
 }
