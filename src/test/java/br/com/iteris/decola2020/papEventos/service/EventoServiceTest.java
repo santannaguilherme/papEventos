@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -148,7 +149,7 @@ public class EventoServiceTest {
 
         expected.expect(InvalidDateException.class);
 
-       service.cancelEvento(anyInt());
+        service.cancelEvento(anyInt());
     }
 
     @Test
@@ -185,16 +186,13 @@ public class EventoServiceTest {
     @Test(expected = DataCantBeDeletedException.class)
     public void should_deleteException() {
         should_findById();
-        doThrow(new InvalidDateException("Error occurred"))
-        .when(repositoryMock)
-        .deleteById(anyInt());
+        doThrow(new InvalidDateException("Error occurred")).when(repositoryMock).deleteById(anyInt());
 
         service.deletEvento(1);
 
         expected.expect(DataCantBeDeletedException.class);
     }
 
-    
     @Test
     public void should_notBeTheSame() {
 
@@ -205,8 +203,8 @@ public class EventoServiceTest {
 
         boolean teste = service.validaDatasEvento(inicio, fim);
 
-        assertFalse("Não deve ser igual",teste);
-        
+        assertFalse("Não deve ser igual", teste);
+
     }
 
     @Test
@@ -219,10 +217,9 @@ public class EventoServiceTest {
 
         boolean teste = service.validaDatasEvento(inicio, fim);
 
-        assertFalse("Não deve ser maior",teste);
-        
-    }
+        assertFalse("Não deve ser maior", teste);
 
+    }
 
     @Test
     public void should_beTheSameDay() {
@@ -233,7 +230,7 @@ public class EventoServiceTest {
         fim.setTime(h2);
 
         boolean teste = service.validaDatasEvento(inicio, fim);
-        assertTrue("Deve ser no mesmo dia",teste);
+        assertTrue("Deve ser no mesmo dia", teste);
 
         h1 = 1577847600000L;
         h2 = 1578020400000L;
@@ -241,7 +238,7 @@ public class EventoServiceTest {
         fim.setTime(h2);
 
         teste = service.validaDatasEvento(inicio, fim);
-        assertFalse("Deve ser no mesmo dia",teste);
+        assertFalse("Deve ser no mesmo dia", teste);
 
         h1 = 1577847600000L;
         h2 = 1580526000000L;
@@ -249,7 +246,7 @@ public class EventoServiceTest {
         fim.setTime(h2);
 
         teste = service.validaDatasEvento(inicio, fim);
-        assertFalse("Deve ser no mesmo mes",teste);
+        assertFalse("Deve ser no mesmo mes", teste);
 
         h1 = 1577847600000L;
         h2 = 1609470000000L;
@@ -257,19 +254,19 @@ public class EventoServiceTest {
         fim.setTime(h2);
 
         teste = service.validaDatasEvento(inicio, fim);
-        assertFalse("Deve ser no mesmo ano",teste);
+        assertFalse("Deve ser no mesmo ano", teste);
 
-        
     }
+
     @Test
     public void should_notBeToday() {
 
         Calendar c = Calendar.getInstance();
         inicio.setTime(c.getTimeInMillis());
-        fim.setTime(c.getTimeInMillis()+30000);
+        fim.setTime(c.getTimeInMillis() + 30000);
 
         boolean teste = service.validaDatasEvento(inicio, fim);
-        assertFalse("Não pode ser no dia atual",teste);
+        assertFalse("Não pode ser no dia atual", teste);
     }
 
     @Test
@@ -277,13 +274,91 @@ public class EventoServiceTest {
         Date date = new Date();
 
         boolean teste = service.validaUpdateDate(date);
-        assertFalse("Não pode atualizar no dia atual",teste);
+        assertFalse("Não pode atualizar no dia atual", teste);
 
-        date.setTime(date.getTime()+24*60*60*1000);
+        date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
 
         teste = service.validaUpdateDate(date);
-        assertTrue("Deve poder atualizar em um dia diferente",teste);
+        assertTrue("Deve poder atualizar em um dia diferente", teste);
     }
 
+    @Test
+    public void should_notStart() {
+        should_findById();
 
+        dataHoraInicio.setTime(dataHoraInicio.getTime() + 24 * 60 * 60 * 1000);
+        entity.setDataHoraInicio(dataHoraInicio);
+
+        expected.expect(InvalidDateException.class);
+
+        service.iniciaEvento(anyInt());
+    }
+
+    @Test
+    public void should_start() {
+        should_findById();
+
+        when(repositoryMock.save(entity)).thenReturn(entity);
+
+        dataHoraInicio.setTime(dataHoraInicio.getTime());
+        entity.setDataHoraInicio(dataHoraInicio);
+
+        Evento e = service.iniciaEvento(anyInt());
+        assertNotNull("Model não deve ser nulo", e);;
+
+    }
+
+    
+    @Test
+    public void should_notFinish() {
+        should_findById();
+
+        expected.expect(InvalidDateException.class);
+
+        service.concluirEvento(anyInt());
+    }
+
+    @Test
+    public void should_finish() {
+        should_findById();
+        StatusEvento sts = new StatusEvento();
+        sts.setIdEventoStatus(2);
+
+        when(repositoryMock.save(entity)).thenReturn(entity);
+        when(serviceStatus.findById(2)).thenReturn(sts);
+        entity.getStatus().setIdEventoStatus(2);
+
+        Evento e = service.concluirEvento(anyInt());
+        assertNotNull("Model não deve ser nulo", e);
+
+    }
+
+    @Test
+    public void should_listDisponiveis() {
+        List<Evento> list = new ArrayList<>();
+        list.add(entity);
+
+        when(repositoryMock.listAberto()).thenReturn(list);
+
+        List<Evento> eventos = service.listEventoDisponivel();
+
+        verify(repositoryMock, times(1)).listAberto();
+        assertNotNull("Array não deve ser nulo", eventos);
+        assertEquals("Array deve ser de tamanho 1", 1, eventos.size());
+    }
+
+    @Test
+    public void should_findByCategoria() {
+        List<Evento> list = new ArrayList<>();
+        list.add(entity);
+        // given
+        when(repositoryMock.findByCategoria(new CategoriaEvento())).thenReturn(list);
+
+        // when
+        List<Evento> model = service.listEventoByCategoria(new CategoriaEvento());
+        // then
+        verify(repositoryMock, times(1)).findByCategoria(new CategoriaEvento());
+        assertNotNull("Array não deve ser nulo", model);
+        assertEquals("Array deve ser de tamanho 1", 1, model.size());
+    }
 }
