@@ -80,7 +80,7 @@ public class EventoController {
 		return ResponseEntity.ok(mapper.toDto(e));
 	}
 
-	@PutMapping(value = "/{id}/cancel")
+	@PutMapping(value = "/cancel/{id}")
 	public ResponseEntity<EventoResponse> cancel(@PathVariable Integer id) {
 		Evento e = eventoService.cancelEvento(id);
 
@@ -101,6 +101,20 @@ public class EventoController {
 		return ResponseEntity.ok(eventoService.listEventoDisponivel().stream() //
 				.map(x -> mapper.toDto(x)) //
 				.collect(Collectors.toList()));
+	}
+	
+	@PutMapping(value = "/start/{id}")
+	public ResponseEntity<EventoResponse> start(@PathVariable Integer id) {
+		Evento e = eventoService.iniciaEvento(id);
+
+		return ResponseEntity.ok(mapper.toDto(e));
+	}
+
+	@PutMapping(value = "/finish/{id}")
+	public ResponseEntity<EventoResponse> finish(@PathVariable Integer id) {
+		Evento e = eventoService.concluirEvento(id);
+
+		return ResponseEntity.ok(mapper.toDto(e));
 	}
 
 }

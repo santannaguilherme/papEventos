@@ -2,7 +2,6 @@ package br.com.iteris.decola2020.papEventos.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.iteris.decola2020.papEventos.domain.dto.response.EventoResponse;
 import br.com.iteris.decola2020.papEventos.domain.entities.CategoriaEvento;
 import br.com.iteris.decola2020.papEventos.domain.entities.Evento;
 import br.com.iteris.decola2020.papEventos.domain.entities.StatusEvento;
@@ -129,5 +127,26 @@ public class EventoService {
 
 	public List<Evento> listEventoDisponivel() {
 		return eventoRepository.listAberto();
-	}
+    }
+    
+    public Evento iniciaEvento(Integer id){
+        Evento e = findById(id);
+        if(validaUpdateDate(e.getDataHoraInicio())){
+            throw new InvalidDateException("Evento não pode ser iniciado fora do dia!");
+        }
+        e.setStatus(statusEventoService.findById(2));
+        return eventoRepository.save(e);
+
+    }
+
+    public Evento concluirEvento(Integer id){
+        Evento e = findById(id);
+        StatusEvento sts = statusEventoService.findById(2);
+        if(!e.getStatus().equals(sts)){
+            throw new InvalidDateException("Evento não pode concluir se não tiver iniciado!");
+        }
+        e.setStatus(statusEventoService.findById(3));
+        return eventoRepository.save(e);
+
+    }
 }

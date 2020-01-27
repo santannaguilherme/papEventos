@@ -51,7 +51,7 @@ public class ParticipacaoServiceTest {
     .comentario(comentario)
     .evento(new Evento())
     .build();
-
+/*
     @Test
     public void should_create() {
         when(repositoryMock.save(entity)).thenReturn(entity);
@@ -60,7 +60,7 @@ public class ParticipacaoServiceTest {
         assertEquals(entity, e);
     }
 
-
+*/
     @Test
     public void should_listEvents() {
         List<Participacao> list = new ArrayList<>();
@@ -108,7 +108,7 @@ public class ParticipacaoServiceTest {
         // when
         service.deletParticipacao(1);
     }
-
+/*
 
     @Test
     public void should_updateEvento() {
@@ -119,5 +119,5 @@ public class ParticipacaoServiceTest {
         assertEquals(entity, e);
     }
 
-
+*/
 }
