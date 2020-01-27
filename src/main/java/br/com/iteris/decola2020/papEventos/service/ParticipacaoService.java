@@ -74,7 +74,7 @@ public class ParticipacaoService {
 
 	public Participacao updatePresParticipacao(Integer id) {
         Participacao p = findById(id);
-        if(p.getEvento().getStatus().getIdEventoStatus() == 1 && p.getEvento().getStatus().getIdEventoStatus() == 4){
+        if(p.getEvento().getStatus().getIdEventoStatus() == 1 || p.getEvento().getStatus().getIdEventoStatus() == 4){
             throw new InvalidParticipateException("Não pode dar presença sem tem iniciado o evento");
         }
         p.setFlagPresente(true);

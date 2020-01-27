@@ -42,6 +42,10 @@ public class EventoService {
         return eventoRepository.findAll();
     }
 
+    public List<Evento> listByDate(Date date) {
+        return eventoRepository.listByDate(date);
+    }
+
     public Evento findById(Integer id) {
         Optional<Evento> evento = eventoRepository.findById(id);
         return evento.orElseThrow(() -> new DataNotFoundException("Event Not found"));

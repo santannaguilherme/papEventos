@@ -1,5 +1,8 @@
 package br.com.iteris.decola2020.papEventos.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,7 +93,18 @@ public class EventoController {
 	@GetMapping(value = "/categotria/{idCategoria}")
 	public ResponseEntity<List<EventoResponse>> listByCategoria(@PathVariable Integer idCategoria) {
 
-		return ResponseEntity.ok(eventoService.listEventoByCategoria(categoriaEventoService.findById(idCategoria)).stream() //
+		return ResponseEntity
+				.ok(eventoService.listEventoByCategoria(categoriaEventoService.findById(idCategoria)).stream() //
+						.map(x -> mapper.toDto(x)) //
+						.collect(Collectors.toList()));
+	}
+
+	@GetMapping(value = "/data/{data}")
+	public ResponseEntity<List<EventoResponse>> listByData(@PathVariable String data) throws ParseException {
+		SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy"); 
+		Date datas = formato.parse(data);
+
+		return ResponseEntity.ok(eventoService.listByDate(datas).stream() //
 				.map(x -> mapper.toDto(x)) //
 				.collect(Collectors.toList()));
 	}
@@ -102,7 +116,7 @@ public class EventoController {
 				.map(x -> mapper.toDto(x)) //
 				.collect(Collectors.toList()));
 	}
-	
+
 	@PutMapping(value = "/start/{id}")
 	public ResponseEntity<EventoResponse> start(@PathVariable Integer id) {
 		Evento e = eventoService.iniciaEvento(id);

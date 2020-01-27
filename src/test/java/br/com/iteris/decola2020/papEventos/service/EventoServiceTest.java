@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -360,5 +359,21 @@ public class EventoServiceTest {
         verify(repositoryMock, times(1)).findByCategoria(new CategoriaEvento());
         assertNotNull("Array não deve ser nulo", model);
         assertEquals("Array deve ser de tamanho 1", 1, model.size());
+    }
+
+    @Test
+    public void should_listByDate() {
+        List<Evento> list = new ArrayList<>();
+        list.add(entity);
+        Date data = new Date();
+
+        when(repositoryMock.listByDate(data)).thenReturn(list);
+
+        List<Evento> eventos = service.listByDate(data);
+
+        verify(repositoryMock, times(1)).listByDate(data);
+        assertNotNull("Array não deve ser nulo", eventos);
+        assertEquals("Array deve ser de tamanho 1", 1, eventos.size());
+      
     }
 }
