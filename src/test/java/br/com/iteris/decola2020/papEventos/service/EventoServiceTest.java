@@ -303,7 +303,7 @@ public class EventoServiceTest {
         entity.setDataHoraInicio(dataHoraInicio);
 
         Evento e = service.iniciaEvento(anyInt());
-        assertNotNull("Model não deve ser nulo", e);;
+        assertNotNull("Model não deve ser nulo", e);
 
     }
 

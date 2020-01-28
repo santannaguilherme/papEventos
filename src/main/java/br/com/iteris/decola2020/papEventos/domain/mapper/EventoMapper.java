@@ -21,8 +21,8 @@ public class EventoMapper {
         this.mapper = mapper;
     }
 
-    public EventoResponse toDto(Evento input) {
-        return mapper.map(input, EventoResponse.class);
+    public EventoResponse toDto(Evento entity) {
+        return mapper.map(entity, EventoResponse.class);
     }
 
     public Evento fromDto(EventoCreateRequest dto) {

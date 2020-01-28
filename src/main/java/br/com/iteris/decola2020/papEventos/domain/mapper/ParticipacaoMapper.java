@@ -26,15 +26,6 @@ public class ParticipacaoMapper {
         return mapper.map(input, ParticipacaoResponse.class);
     }
 
-    public Participacao fromDto(ParticipacaoCreateRequest input) {
-        return mapper.map(input, Participacao.class);
-    }
-
-    public Participacao updateFromDto(ParticipacaoCreateRequest input,Integer id) {
-        Participacao p = mapper.map(input, Participacao.class);
-        p.setIdParticipacao(id);
-        return p;
-    }
 
     public Participacao newFromDto(ParticipacaoCreateRequest input) {
         Participacao p = mapper.map(input, Participacao.class);
