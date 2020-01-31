@@ -9,6 +9,7 @@ public class PapEventosApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		PapEventosApplication.main(new String[] {});
 	}
 
 }
